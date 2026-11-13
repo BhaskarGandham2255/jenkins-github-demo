@@ -20,6 +20,28 @@ pipeline {
                 sh 'ls -lh target/'
             }
         }
+	
+	stage('Test Jenkins Credentials') {
+    		steps {
+        		withCredentials([
+            		string(
+                credentialsId: 'demo-secret',
+                variable: 'DEMO_SECRET'
+            )
+        ]) {
+            sh '''
+                if [ -n "$DEMO_SECRET" ]; then
+                    echo "Credential loaded successfully!"
+                else
+                    echo "Credential is missing!"
+                    exit 1
+                fi
+            '''
+        }
+    }
+}
+
+
     }
 
     post {
