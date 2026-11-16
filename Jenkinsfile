@@ -1,7 +1,21 @@
 
 pipeline {
     agent any
-
+	
+	parameters {
+	    choice(
+	        name: 'BUILD_ENV',
+	        choices: ['DEV', 'QA', 'PROD'],
+	        description: 'Select the build environment'
+	    )
+	
+	    string(
+	        name: 'APP_VERSION',
+	        defaultValue: '1.0.0',
+	        description: 'Application version'
+	    )
+	}
+	
     stages {
         stage('Checkout') {
             steps {
@@ -20,6 +34,12 @@ pipeline {
                 sh 'ls -lh target/'
             }
         }
+		stage('Show Build Parameters') {
+		    steps {
+		        echo "Selected Environment: ${params.BUILD_ENV}"
+		        echo "Application Version: ${params.APP_VERSION}"
+		    }
+		}
 	
     }
 
