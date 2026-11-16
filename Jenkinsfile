@@ -21,9 +21,6 @@ pipeline {
             }
         }
 	
-}
-
-
     }
 
     post {
@@ -42,4 +39,3 @@ pipeline {
         }
     }
 }
-
